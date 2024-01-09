@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="input.css" />
-    <link href="./src/output.css" rel="stylesheet" />
+    <link href="./assets/dist/output.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -227,7 +227,8 @@
       <p class="text-black text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
     </div>
     <div class="flex items-center">
-      <img class="w-10 h-10 rounded-full mr-4" src="./Rectangle 14.png" alt="Avatar of Jonathan Reinink">
+      <img class="w-10 h-10 rounded-full mr-4" src="./Rect
+      angle 14.png" alt="Avatar of Jonathan Reinink">
       <div class="text-sm">
         <p class="text-black leading-none">Jonathan Reinink</p>
         <p class="text-black">Aug 18</p>
@@ -309,7 +310,7 @@
               <p class="text-black text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
             </div>
             <div class="flex items-center">
-              <img class="w-10 h-10 rounded-full mr-4" src="./Rectangle 14.png" alt="Avatar of Jonathan Reinink">
+              <img class="w-10 h-10 rounded-full mr-4" src="../public/assets/Rectangle 14.png" alt="Avatar of Jonathan Reinink">
               <div class="text-sm">
                 <p class="text-black leading-none">Jonathan Reinink</p>
                 <p class="text-black">Aug 18</p>
@@ -329,7 +330,7 @@
               <p class="text-black text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
             </div>
             <div class="flex items-center">
-              <img class="w-10 h-10 rounded-full mr-4" src="./Rectangle 14.png" alt="Avatar of Jonathan Reinink">
+              <img class="w-10 h-10 rounded-full mr-4" src="../public/assets/Rectangle 14.png" alt="Avatar of Jonathan Reinink">
               <div class="text-sm">
                 <p class="text-black leading-none">Jonathan Reinink</p>
                 <p class="text-black">Aug 18</p>
@@ -349,7 +350,7 @@
               <p class="text-black text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
             </div>
             <div class="flex items-center">
-              <img class="w-10 h-10 rounded-full mr-4" src="./Rectangle 14.png" alt="Avatar of Jonathan Reinink">
+              <img class="w-10 h-10 rounded-full mr-4" src="../public/assets/Rectangle 14.png" alt="Avatar of Jonathan Reinink">
               <div class="text-sm">
                 <p class="text-black leading-none">Jonathan Reinink</p>
                 <p class="text-black">Aug 18</p>
@@ -369,7 +370,7 @@
               <p class="text-black text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
             </div>
             <div class="flex items-center">
-              <img class="w-10 h-10 rounded-full mr-4" src="./Rectangle 14.png" alt="Avatar of Jonathan Reinink">
+              <img class="w-10 h-10 rounded-full mr-4" src="../public/assets/Rectangle 14.png" alt="Avatar of Jonathan Reinink">
               <div class="text-sm">
                 <p class="text-black leading-none">Jonathan Reinink</p>
                 <p class="text-black">Aug 18</p>
@@ -392,7 +393,7 @@
       <div class="md:flex md:justify-between">
         <div class="mb-6 md:mb-0">
             <a href="https://flowbite.com/" class="flex items-center">
-                <img src="Wiki™.png" class="h-8 me-3" alt="FlowBite Logo" />
+                <img src="../public/assets/Wiki™.png" class="h-8 me-3" alt="FlowBite Logo" />
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
             </a>
         </div>
@@ -476,3 +477,4 @@
  
   <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 </html>
+c:\laragon\www\wiki\views\login.php c:\laragon\www\wiki\views\signup.php c:\laragon\www\wiki\views\wiki.php
