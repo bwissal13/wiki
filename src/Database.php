@@ -2,7 +2,7 @@
 namespace App;
 use PDOException;
 use PDO;
-class DatabaseConnection {
+class Database{
     private static $instance;
     private $connection;
 
