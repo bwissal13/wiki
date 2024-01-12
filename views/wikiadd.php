@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="input.css" />
     <link href="./assets/dist/output.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <script src="./assets/tinymce\tinymce\tinymce.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css"
+      rel="stylesheet"
+    />
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Rhodium+Libre&display=swap"
@@ -192,34 +198,62 @@
       
     </ul> -->
   </div>
-  <section class=" ">
-    <img src="../public/assets/img.jpg" alt="">
-  <h1 class="ml-6 text-center text-sm font-medium">Article</h1>
-  <div class="flex justify-center ml-6 ">
- 
-    <p style="width: 60vw;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam saepe totam esse quam ex? Officia laudantium quis adipisci minus ea nesciunt possimus quos rerum, inventore aliquam sapiente. Repellat, officia commodi!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis beatae velit facere nemo iste ipsum dolor magni, nesciunt fuga cupiditate eaque officia, libero, maiores soluta incidunt impedit. Unde, non laudantium?
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa tempora delectus molestias ratione explicabo itaque pariatur consequatur, aut eligendi! Veritatis veniam ut mollitia quibusdam praesentium provident earum ad alias aliquam!
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero enim aliquam blanditiis magnam consectetur deserunt quas optio quaerat fugiat expedita nesciunt laudantium, at fugit harum, dolor ea qui perferendis necessitatibus.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda asperiores provident magni delectus nam consequatur incidunt possimus, nisi reiciendis enim, maxime tenetur fugit ex doloribus molestias harum ab, excepturi deleniti!
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci qui quo minus fuga velit consectetur modi eaque alias consequuntur, id ipsa! Id nobis tempore aliquid nihil, maiores doloribus! Quibusdam, accusamus?
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti facere rem officia, labore officiis, iusto quo ab laboriosam sapiente dolorum optio voluptate enim! Ab itaque maiores iste ipsam quod cupiditate.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim dolor eos et veniam est tempore porro quisquam. Sint delectus vero, rem reiciendis explicabo animi dolorem odio velit blanditiis molestias ut.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi accusantium velit ipsum esse perferendis commodi tempora molestiae ullam quos deleniti officia dolore facilis placeat, quaerat qui. Blanditiis saepe hic asperiores.
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ratione nisi rem recusandae adipisci, eius dolorem quae alias possimus consequuntur distinctio quis maxime, doloribus unde, esse consequatur quisquam cum autem voluptatem.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos rem architecto magnam! Itaque accusantium sunt molestiae error ab numquam ipsam provident, eum nam? Cupiditate porro itaque obcaecati, ut labore ea.
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet, dignissimos neque sapiente ullam facilis adipisci molestiae tenetur cum nemo. Dolorem nulla vitae rem illo porro assumenda aspernatur consectetur error qui!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, iure sed perferendis distinctio unde, soluta eveniet tempora ex qui reiciendis ab officiis autem optio pariatur. Facere odit vitae animi corporis?
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut molestiae totam reiciendis, corporis consectetur dignissimos vero minima amet aspernatur quae, doloribus voluptate beatae voluptates praesentium officiis? Necessitatibus dolorem reiciendis voluptates!
-    
-    </p>
- 
-  </div>
-  <div>
-    <span>content</span>
-  </div>
   
-  </section>
+  <h1 class="text-xl font-bold text-center">Add Wiki</h1>
+  <div class="container mx-auto">
+<form action="http://localhost:8000/wikifradd" method="Post">
+    <input
+        class="w-full px-4 py-2 border-none rounded-none dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker"
+        type="text"
+        name="title"
+        placeholder="Title"
+        required
+    />
+    <input
+        class="w-full px-4 py-2 border-none rounded-none dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker"
+        type="description"
+        name="description"
+        placeholder="description"
+        required
+    />
+                   
+     <textarea   class="w-full px-4 py-2 border-none rounded-none dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker"  id="about" name="Content" aria-describedby="emailHelp"></textarea>
+     <select id="categoryId" name="categoryId" class="bg-gray-50 border-none text-gray-900 text-sm rounded-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option selected>Choose a Category</option>
+        <?php foreach($categories as $category): ?>
+            <option value=<?=  $category['id'] ?>><?=  $category['name'] ?></option>
+        <?php endforeach; ?>
+    </select>
+    <select id="userId" name="userId" class="bg-gray-50  text-gray-900 text-sm border-none rounded-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <?php foreach($users as $user): ?>
+            <option value=<?=  $user['Id'] ?>><?=  $user['name'] ?></option>
+        <?php endforeach; ?>
+    </select> 
+    <!-- <div class="relative flex w-full">
+        <select
+          id="select-tag"
+          name="tags[]"
+          multiple
+          placeholder="Select tags..."
+          autocomplete="off"
+          class="block w-full rounded-sm cursor-pointer focus:outline-none"
+          multiple
+        >
+          <option value="1">super admin</option>
+          <option value="2">admin</option>
+          <option value="3">writer</option>
+          <option value="4">user</option>
+        </select>
+      </div> -->
+    <button
+        type="submit"
+        class="w-full px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:focus:ring-offset-darker"
+    >
+        Add
+    </button>
+</form>
+</div>
+
   
 
 
@@ -309,8 +343,37 @@
         </div>
       </footer>
        -->
-        </body>
-       
-        <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
-      </html>
-      
+       </body>
+       <script>
+            tinymce.init({
+                selector: '#about',
+                width: 800,
+                height: 400,
+                placeholder: "Content",
+                plugins: [
+                    'advlist', 'autolink', 'link', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+                    'searchreplace', 'wordcount', 'visualblocks', 'code', 'fullscreen', 'emoticons', 'template', 'codesample'
+                ],
+                toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright alignjustify |' +
+                    'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+                    'forecolor backcolor emoticons',
+                menu: {
+                    favs: {
+                        title: 'menu',
+                        items: 'code visualaid | searchreplace | emoticons'
+                    }
+                },
+                menubar: 'favs file edit view insert format tools table',
+                content_style: 'body{font-family:Helvetica,Arial,sans-serif; font-size:16px}'
+            });
+        </script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+    <script>
+      new TomSelect('#select-tag', {
+        maxItems: 3,
+      });
+    </script>
+       <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+     </html>
+     
