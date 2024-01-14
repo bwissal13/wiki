@@ -23,4 +23,10 @@ class UserController extends Controller
         header("Location: http://localhost:8000/user");
 
     }
+    public function logout()
+	{
+		session_destroy();
+		header('Location:http://localhost:8000/login');
+	}
+    
 }
