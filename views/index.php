@@ -73,10 +73,28 @@
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <!-- <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Dashboard</a> -->
+                <!-- <a href="http://localhost:8000/login" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Sign in</a> -->
               </div>
             </div>
           </div>
+          <?php
+// Check if the user is logged in
+$isLoggedIn = isset($_SESSION['user_id']);
+
+// Set the URL for the login and logout actions
+$loginUrl = 'http://localhost:8000/login';
+$logoutUrl = 'http://localhost:8000/logout';
+
+// Set the text and URL based on the user's login status
+$buttonText = $isLoggedIn ? 'Logout' : 'Sign in';
+$buttonUrl = $isLoggedIn ? $logoutUrl : $loginUrl;
+?>
+<div class="flex space-x-4">
+    <a href="<?php echo $buttonUrl; ?>" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium">
+        <?php echo $buttonText; ?>
+    </a>
+</div>
+
           <div
             class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
           >
@@ -134,10 +152,10 @@
             -->
               <!-- <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1"> -->
               <!-- Active: "bg-gray-100", Not Active: "" -->
-              <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a> 
-            </div> -->
+             <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a> -->
+              <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>  -->
+            </div> 
             </div>
           </div>
         </div>
@@ -156,6 +174,13 @@
         </div>
       </div>
     </nav>
+    
+    <?php if(isset($_SESSION['user_name'])): ?>
+    <h1 style="font-family: 'Rhodium Libre', serif; color: #000000" class="text-xl">
+        Welcome <?php echo $_SESSION['user_name']; ?>
+    </h1>
+<?php endif; ?>
+
     <section
       style="
         height: 95vh;
@@ -214,176 +239,118 @@
       </div>
     </section>
     <section class="ml-6">
-     
+
 <h2 class="text-xl font-bold m-5 text-center ">last updated</h2>
 
+<?php
+// Assuming $rows is an array of items fetched from the database
 
-<div class="max-w-sm w-full lg:max-w-full lg:flex justify-center mb-8 mt-8 ">
-          
-  <div class="border border-gray-400  lg:border-t lg:border-gray-400  rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal ">
-    <div>
-    <div class="mb-8">
-      <div class="text-black font-bold text-xl mb-2">Can coffee make you a better developer?</div>
-      <p class="text-black text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
+// Sort $rows array based on the 'id' field in descending order
+usort($rows, function ($a, $b) {
+    return $b['Id'] <=> $a['Id'];
+});
+
+// Get the first item in the sorted array (which is now the one with the largest id)
+$latestItem = reset($rows);
+
+// Find the user with the corresponding userId
+$latestUser = array_filter($users, function ($u) use ($latestItem) {
+    return $u['Id'] == $latestItem['userId'];
+});
+
+// Find the category with the corresponding categoryId
+$latestCategory = array_filter($categories, function ($c) use ($latestItem) {
+    return $c['id'] == $latestItem['categoryId'];
+});
+
+// Check if user and category are found
+if (!empty($latestUser) && !empty($latestCategory)) {
+    $latestUser = reset($latestUser);
+    $latestCategory = reset($latestCategory);
+?>
+    <div class="flex flex-col items-center">
+        <div class="flex flex-col w-60 mb-8 mt-8 border border-gray-400 lg:border-t lg:border-gray-400 rounded-b lg:rounded-b-none lg:rounded-r p-4" style="width: 60vw;">
+            <div class="mb-8">
+                <div class="text-black font-bold text-xl mb-2"><?php echo $latestItem['title'] ?></div>
+                <p class="text-black text-base"><?php echo $latestItem['description'] ?></p>
+            </div>
+            <div class="flex items-center">
+                <div class="text-sm">
+                    <p class="text-black leading-none">Added by: <?php echo $latestUser['name'] ?></p>
+                    <p class="text-black leading-none"> <?php echo $latestCategory['name'] ?></p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="flex items-center">
-      <img class="w-10 h-10 rounded-full mr-4" src="./Rect
-      angle 14.png" alt="Avatar of Jonathan Reinink">
-      <div class="text-sm">
-        <p class="text-black leading-none">Jonathan Reinink</p>
-        <p class="text-black">Aug 18</p>
-      </div>
-    </div>
-    </div>
-  
-  </div>
-  
-</div>
+<?php
+}
+?>
+
 
  
       
     </section>
-    <section class="">
+    <section >
       <div
         class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700 "
       >
-        <ul class="flex flex-wrap -mb-px justify-center">
-          <li class="me-2">
-            <a
-              href="#"
-              class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-              >category</a
-            >
-          </li>
-          <li class="me-2">
-            <a
-              href="#"
-              class="inline-block p-4 text-black-600 border-b-2 border-black-600 rounded-t-lg active dark:text-black-500 dark:border-black-500"
-              aria-current="page"
-              >category</a
-            >
-          </li>
-          <li class="me-2">
-            <a
-              href="#"
-              class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-              >category</a
-            >
-          </li>
-          <li class="me-2">
-            <a
-              href="#"
-              class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-              >category</a
-            >
-          </li>
-          
-        </ul>
-      </div>
-      <div class="p-4 ">
-        <div class="max-w-sm w-full lg:max-w-full lg:flex justify-center mb-8 mt-8 ">
-          
-          <div class="border border-gray-400  lg:border-t lg:border-gray-400  rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal ">
-            <div>
-            <div class="mb-8">
-              <div class="text-black font-bold text-xl mb-2">Can coffee make you a better developer?</div>
-              <p class="text-black text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
-            </div>
-            <div class="flex items-center">
-              <img class="w-10 h-10 rounded-full mr-4" src="./Rectangle 14.png" alt="Avatar of Jonathan Reinink">
-              <div class="text-sm">
-                <p class="text-black leading-none">Jonathan Reinink</p>
-                <p class="text-black">Aug 18</p>
-              </div>
-            </div>
-            </div>
-          
-          </div>
-          
-        </div>
-        <div class="max-w-sm w-full lg:max-w-full lg:flex justify-center mb-8 mt-8 ">
-          
-          <div class="border border-gray-400  lg:border-t lg:border-gray-400  rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal ">
-            <div>
-            <div class="mb-8">
-              <div class="text-black font-bold text-xl mb-2">Can coffee make you a better developer?</div>
-              <p class="text-black text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
-            </div>
-            <div class="flex items-center">
-              <img class="w-10 h-10 rounded-full mr-4" src="../public/assets/Rectangle 14.png" alt="Avatar of Jonathan Reinink">
-              <div class="text-sm">
-                <p class="text-black leading-none">Jonathan Reinink</p>
-                <p class="text-black">Aug 18</p>
-              </div>
-            </div>
-            </div>
-          
-          </div>
-          
-        </div>
-        <div class="max-w-sm w-full lg:max-w-full lg:flex justify-center mb-8 mt-8 ">
-          
-          <div class="border border-gray-400  lg:border-t lg:border-gray-400  rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal ">
-            <div>
-            <div class="mb-8">
-              <div class="text-black font-bold text-xl mb-2">Can coffee make you a better developer?</div>
-              <p class="text-black text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
-            </div>
-            <div class="flex items-center">
-              <img class="w-10 h-10 rounded-full mr-4" src="../public/assets/Rectangle 14.png" alt="Avatar of Jonathan Reinink">
-              <div class="text-sm">
-                <p class="text-black leading-none">Jonathan Reinink</p>
-                <p class="text-black">Aug 18</p>
-              </div>
-            </div>
-            </div>
-          
-          </div>
-          
-        </div>
-        <div class="max-w-sm w-full lg:max-w-full lg:flex justify-center mb-8 mt-8 ">
-          
-          <div class="border border-gray-400  lg:border-t lg:border-gray-400  rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal ">
-            <div>
-            <div class="mb-8">
-              <div class="text-black font-bold text-xl mb-2">Can coffee make you a better developer?</div>
-              <p class="text-black text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
-            </div>
-            <div class="flex items-center">
-              <img class="w-10 h-10 rounded-full mr-4" src="../public/assets/Rectangle 14.png" alt="Avatar of Jonathan Reinink">
-              <div class="text-sm">
-                <p class="text-black leading-none">Jonathan Reinink</p>
-                <p class="text-black">Aug 18</p>
-              </div>
-            </div>
-            </div>
-          
-          </div>
-          
-        </div>
-        <div class="max-w-sm w-full lg:max-w-full lg:flex justify-center mb-8 mt-8 ">
-          
-          <div class="border border-gray-400  lg:border-t lg:border-gray-400  rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal ">
-            <div>
-            <div class="mb-8">
-              <div class="text-black font-bold text-xl mb-2">Can coffee make you a better developer?</div>
-              <p class="text-black text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
-            </div>
-            <div class="flex items-center">
-              <img class="w-10 h-10 rounded-full mr-4" src="../public/assets/Rectangle 14.png" alt="Avatar of Jonathan Reinink">
-              <div class="text-sm">
-                <p class="text-black leading-none">Jonathan Reinink</p>
-                <p class="text-black">Aug 18</p>
-              </div>
-            </div>
-            </div>
-          
-          </div>
-          
-        </div>
-        
-          
-        </div>
+   <!-- Assuming this is part of your HTML/PHP file -->
+<div id="categoryContainer">
+    <ul class="flex flex-wrap -mb-px justify-center">
+        <?php foreach ($categories as $category): ?>
+            <li class="me-2">
+                <a href="#" data-category-id="<?php echo $category['id']; ?>"
+                   class="category-link inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                ><?php echo $category['name']; ?></a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+
+    <div id="contentContainer">
+        <?php
+        $counter = 0;
+        foreach ($rows as $row):
+            // Assuming $selectedCategoryId is set based on the initial selected category
+            $selectedCategoryId = 1;
+
+            // Check if the row belongs to the initially selected category
+            if ($counter < 3 && $row['categoryId'] == $selectedCategoryId):
+                $user = array_filter($users, function ($u) use ($row) {
+                    return $u['Id'] == $row['userId'];
+                });
+
+                $category = array_filter($categories, function ($c) use ($row) {
+                    return $c['id'] == $row['categoryId'];
+                });
+
+                if (!empty($user) && !empty($category)):
+                    $user = reset($user);
+                    $category = reset($category);
+        ?>
+                    <div class="flex flex-col items-center">
+                        <div class="flex flex-col w-60 mb-8 mt-8 border border-gray-400 lg:border-t lg:border-gray-400 rounded-b lg:rounded-b-none lg:rounded-r p-4" style="width: 60vw;">
+                            <div class="mb-8">
+                                <div class="text-black font-bold text-xl mb-2"><?php echo $row['title'] ?></div>
+                                <p class="text-black text-base"><?php echo $row['description'] ?></p>
+                            </div>
+                            <div class="flex ">
+                                <div class="text-sm">
+                                    <p class="text-black leading-none">Added by: <?php echo $user['name'] ?></p>
+                                    <p class="text-black leading-none"><?php echo $category['name'] ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        <?php
+                endif;
+            endif;
+
+            $counter++;
+        endforeach;
+        ?>
+    </div>
+</div>
+
      
     </section>
     
@@ -474,7 +441,117 @@
 </footer>
 
   </body>
- 
-  <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+  <script>
+        //  function search() {
+        //     let search_inp = document.getElementById("search_inp");
+        //     let cards = document.getElementById("cards");
+        //     $.ajax({
+        //        method: "POST",
+        //        url: "/search_Wiki",
+        //        data: {
+        //           keyword: search_inp.value,
+        //        },
+        //        // dataType: "json",
+
+        //        success: function(response) {
+        //           //   console.log("the response is :", response);
+        //           cards.innerHTML = response;
+        //        },
+        //        error: function() {
+        //           alert("no Wiki found");
+        //        },
+        //     });
+        //  }
+
+        //  function searchCateg(e) {
+        //     let category = e.target.textContent;
+
+        //     let cards = document.getElementById("cards");
+        //     $.ajax({
+        //        method: "POST",
+        //        url: "/search_tags",
+        //        data: {
+        //           keyword: category == 'All' ? '' : category,
+        //        },
+        //        // dataType: "json",
+
+        //        success: function(response) {
+        //           //   console.log("the response is :", response);
+        //           cards.innerHTML = response;
+        //        },
+        //        error: function() {
+        //           alert("no user found");
+        //        },
+        //     });
+        //  }
+
+         search();
+      </script>
+  <!-- <script src="../path/to/flowbite/dist/flowbite.min.js"></script> -->
+  <script src="../public/flowbite/dist/flowbite.min.js"></script>
+<!-- Add this JavaScript code in your HTML file -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var categoryLinks = document.querySelectorAll('.category-link');
+        var contentContainer = document.getElementById('contentContainer');
+
+        categoryLinks.forEach(function (link) {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                // Get the selected category id from the data attribute
+                var selectedCategoryId = this.getAttribute('data-category-id');
+
+                // Update the content based on the selected category
+                updateContent(selectedCategoryId);
+            });
+        });
+
+        function updateContent(selectedCategoryId) {
+            // Fetch and update content based on the selected category using AJAX or other methods
+            // For simplicity, we'll assume the content is pre-loaded in the PHP code
+            contentContainer.innerHTML = '';
+
+            <?php
+            $counter = 0;
+            foreach ($rows as $row):
+                // Check if the row belongs to the selected category
+                ?>
+                if (<?php echo $counter; ?> < 3 && <?php echo $row['categoryId']; ?> == selectedCategoryId) {
+                    var user = <?php echo json_encode(array_values(array_filter($users, function ($u) use ($row) { return $u['Id'] == $row['userId']; }))); ?>;
+                    var category = <?php echo json_encode(array_values(array_filter($categories, function ($c) use ($row) { return $c['id'] == $row['categoryId']; }))); ?>;
+
+                    if (user.length > 0 && category.length > 0) {
+                        user = user[0];
+                        category = category[0];
+
+                        var content = `
+                            <div class="flex flex-col items-center">
+                                <div class="flex flex-col w-60 mb-8 mt-8 border border-gray-400 lg:border-t lg:border-gray-400 rounded-b lg:rounded-b-none lg:rounded-r p-4" style="width: 60vw;">
+                                    <div class="mb-8">
+                                        <div class="text-black font-bold text-xl mb-2"><?php echo $row['title']; ?></div>
+                                        <p class="text-black text-base"><?php echo $row['description']; ?></p>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="text-sm">
+                                            <p class="text-black leading-none">User: ${user.name}</p>
+                                            <p class="text-black leading-none">Category: ${category.name}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+
+                        contentContainer.innerHTML += content;
+                    }
+                }
+                <?php
+                $counter++;
+            endforeach;
+            ?>
+        }
+    });
+</script>
+
+  C:\laragon\www\wiki\node_modules\flowbite\dist\flowbite.min.js
 </html>
-c:\laragon\www\wiki\views\login.php c:\laragon\www\wiki\views\signup.php c:\laragon\www\wiki\views\wiki.php
