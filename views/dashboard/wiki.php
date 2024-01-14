@@ -1252,6 +1252,9 @@
                User Id
                 </th>
                 <th scope="col" class="px-6 py-3">
+               Status
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Edit
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -1284,9 +1287,12 @@
                 <td class="px-6 py-4">
                 <?php echo $row['userId'] ?>
                 </td>
+                <td class="px-6 py-4">
+                <?php echo $row['status'] ?>
+                </td>
                 
                 <td class="px-6 py-4 text-right">
-                    <a href="http://localhost:8000/wikiupdate?id=<?=$row['Id'] ?>&title=<?= $row['title'] ?>&description=<?= $row['description'] ?>&description=<?= $row['content'] ?>&description=<?= $row['content'] ?>&description=<?= $row['description'] ?>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="http://localhost:8000/wikifrupdate?id=<?=$row['Id'] ?>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                 </td>
                 <!-- <td class="px-6 py-4 text-right">
                     <a href="http://localhost:8000/categorydelete?id=<?=$row['id'] ?>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
